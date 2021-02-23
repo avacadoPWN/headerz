@@ -1,2 +1,14 @@
 # headerz
-lightwight-python-based http/https header collector
+is a lightwight http/https header collector based on python3
+
+Features:
+        1- Multi-Threaded requests.
+        2- SSL check.
+        3- JSON output.
+
+
+Requirements:
+pip3 install -r requirements.txt
+
+Usage:
+python3 headerz.py [url_list] [out_file]
