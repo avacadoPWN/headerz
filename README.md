@@ -1,6 +1,9 @@
 # headerz
 is a lightwight http/https header collector based on python3
 
+At the moment the code is a bit of a mess but it gets the job done :) 
+I will polish and add more features to it in the feature.
+
 Features:
 
 1- Multi-Threaded requests.
