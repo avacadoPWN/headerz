@@ -23,7 +23,7 @@ if len(sys.argv) >= 2 and len(sys.argv) < 4:
             'json_export': sys.argv[2]}        
 else:
     print("Usage:\n\n"+
-          "./headerz.py    [url_list]   [output_file]\n")
+          "./headerz.py    url_list   output_file\n")
     exit(-1)
 
 print("\nNumber of Threads (default 65): ",end='')
