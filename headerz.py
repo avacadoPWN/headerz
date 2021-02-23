@@ -147,7 +147,7 @@ def check(url):
         output['num_of_requests'] += -1
         pass
     except:
-        #print(url,"Unknown Error")
+        failed_URL(url)
         output['u_error'] += 1
         
     finally:
