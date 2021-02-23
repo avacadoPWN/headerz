@@ -1,3 +1,7 @@
+#!/bin/python3
+#Author: avacadoPWN (Kovan MohammedAmeen)
+#License: MIT
+
 import time,json,queue,ssl,threading,requests,sys,datetime
 from urllib3 import poolmanager
 from concurrent.futures import ThreadPoolExecutor
