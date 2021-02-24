@@ -41,11 +41,11 @@ else:
 if args['json_export']:
     output_file = args['json_export']
 else:
-    output_file = args['urls_list'] + " - " + t.now().strftime("%Y-%m-%d_%H-%M-%S")
+    output_file = args['urls_list'] + " - " + t.now().strftime("%Y-%m-%d_%H-%M-%S") + ".json"
 
 
-export_file = open(output_file,"a")
-failed_to_check = open("failed_"+output_file,"a")
+export_file = open(output_file,"a+")
+failed_to_check = open("failed_"+output_file[:-5]+".list","a")
 
 try:
     urls  = open(args['urls_list'],"r").read()
@@ -86,14 +86,17 @@ output = {
     'num_of_urls': len(urls)
 }
 
-def failed_URL(url):
-    failed_to_check.write(url+"\n")
 
 
-def write_to_json(header,url,ssl=True):
-    json_header={}
-    json_header[url] = {'SSL':ssl,'headers':dict(header)}
-    export_file.write(json.dumps(dict(json_header),indent=3, sort_keys=True) + '\n\n')
+collected_headers = {}
+
+def add_to_dict(header,url,ssl=True):
+    global collected_headers
+    collected_headers[url] = {'SSL':ssl,'headers':dict(header)}
+
+def flush_to_json():
+    global collected_headers
+    json.dump(collected_headers,export_file,indent=3,sort_keys=True,)
 
 
 
@@ -125,19 +128,19 @@ def printer():
 class EmptyURL(Exception):
     pass
 
-
-
+def failed_URL(url):
+    failed_to_check.write(url+"\n")
 
 def check(url):
     if url == '': raise EmptyURL
 
     try:
-        response= session.get("https://"+url+"/",headers=headers,timeout=15)    
-        write_to_json(response.headers,url)
+        response= session.get("https://"+url+"/",headers=headers,timeout=30)    
+        add_to_dict(response.headers,url)
         output['passed'] += 1
     except requests.exceptions.SSLError:
-        response= session.get("http://"+url+"/",headers=headers,timeout=15)
-        write_to_json(response.headers,url,ssl=False)
+        response= session.get("http://"+url+"/",headers=headers,timeout=30)
+        add_to_dict(response.headers,url,ssl=False)
         output['ssl_error'] += 1
 
     except KeyboardInterrupt:
@@ -165,6 +168,7 @@ def main():
         pass
 
 main()
+flush_to_json()
 
 export_file.close()
 failed_to_check.close()
@@ -174,9 +178,3 @@ t2 = time.time()
 print('\n')
 print("[green]done![/green]")
 print("Time Elapsed: {:.2f} S\n".format(t2-t1))
-
-
-
-
-
-
