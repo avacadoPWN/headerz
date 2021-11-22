@@ -1,5 +1,5 @@
 # headerz
-is a light-weight http/https header collector based on python3
+is a light-weight https header collector based on python3
 
 This tool was made as a part of a research project.
 
