@@ -48,7 +48,7 @@ else:
     stats_file = args['urls_list'] + " - " + \
         t.now().strftime("%Y-%m-%d_%H-%M-%S") + ".ndjson"
 
-results_directory = os.getcwd()+"/results/"
+results_directory = os.getcwd()
 
 export_file = open(results_directory+stats_file, "a+")
 
