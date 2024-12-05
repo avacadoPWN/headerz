@@ -62,6 +62,3 @@ The new async implementation offers significantly better performance compared to
 * Faster processing of large URL lists
 * Improved error recovery
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
